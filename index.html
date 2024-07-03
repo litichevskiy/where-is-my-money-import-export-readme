@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Import/export purchases from/to Where's my money application</title>
+    <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#00784D">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="dist/styles/style.css">
+    <link rel="icon" type="image/png" href="./src/images/favicon.ico">
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="container-logo">
+          <img class="logo" alt="Where's my money" src="./src/images/app-logo/app_image_green_bg_192x192.jpg">
+        </div>
+      </header>
+      <main class="main">
+        <h4 class="short-description">Export purchases from app.</h4>
+        <ul class="list-app-description">
+          <li class="item-list-app-description">
+            You can send all purchases to your server, for this, type valid URL in input and tap "send". It's all.
+          </li>
+          <li class="item-list-app-description">
+            URL validation, it's mean
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/URL" class="external-link" target="_blank">
+            new URL( YOUR_URL )</a>
+            shouldn't throw an exception.
+          </li>
+          <li class="item-list-app-description">
+            The application send POST request to server. The request will have one field "payload" wich contain list purchases.
+          </li>
+          <li class="item-list-app-description" style="margin-top:7px"></li>
+          <li class="item-list-app-description">URL validation.</li>
+          <li class="item-list-app-description">
+<pre>
+<code>
+  <span class="hlht keyword">const</span> YOUR_URL = urlInput.value;
+  <span class="hlht keyword">try</span><span class="hlht punctuation">{</span>
+    <span class="hlht keyword">new</span> <span class="hlht class-name">URL</span><span class="hlht punctuation">(</span>YOUR_URL<span class="hlht punctuation">)</span>;
+  <span class="hlht punctuation">}</span><span class="hlht keyword"> catch </span><span class="hlht punctuation">(</span>error<span class="hlht punctuation">)</span><span class="hlht punctuation">{}</span>;
+</code>
+</pre>
+          </li>
+          <li class="item-list-app-description">
+            Server endpoint must allow
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" class="external-link" target="_blank">CORS</a> request.
+          </li>
+          <li class="item-list-app-description">
+
+<pre>
+<code>
+  <span class="hlht class-name">fetch</span><span class="hlht punctuation">(</span><span class="hlht punctuation"> YOUR_URL</span><span class="hlht punctuation">,</span> <span class="hlht punctuation">{</span>
+    <span class="hlht literal-property property">method</span><span class="hlht operator">:</span> <span class="hlht string">"POST"</span><span class="hlht punctuation">,</span>
+    <span class="hlht literal-property property">headers</span><span class="hlht operator">:</span> <span class="hlht punctuation">{</span><span class="hlht string-property property">"Content-Type"</span><span class="hlht operator">:</span> <span class="hlht string">"application/json"</span><span class="hlht punctuation"></span><span class="hlht punctuation">}</span><span class="hlht punctuation">,</span>
+    <span class="hlht literal-property property">body</span><span class="hlht operator">:</span> <span class="hlht constant">JSON</span><span class="hlht punctuation">.</span><span class="hlht function">stringify</span><span class="hlht punctuation">(</span><span class="hlht punctuation">{</span><span class="hlht literal-property property">payload</span><span class="hlht operator">:</span> <span class="hlht constant">Array</span><span class="hlht punctuation">&lt;</span><span class="hlht constant">Purchase</span><span class="hlht punctuation">&gt;</span><span class="hlht punctuation">}</span><span class="hlht punctuation">)</span>
+  <span class="hlht punctuation">}</span><span class="hlht punctuation">)</span><span class="hlht punctuation">;</span>
+</code>
+</pre>
+          </li>
+          <li class="item-list-app-description">Expected response: (optional).</li>
+          <li class="item-list-app-description">
+<pre>
+<code>
+  <span class="hlht keyword">type</span> Respons = <span class="hlht punctuation">{</span>
+    <span class="hlht literal-property property">status</span> :<span class="hlht constant">boolean</span>,
+    <span class="hlht literal-property property">message</span> :<span class="hlht constant">string</span>,
+    <span class="hlht literal-property property">error</span> :<span class="hlht constant">Error</span>,
+  <span class="hlht punctuation">}</span>;
+</code>
+</pre>
+          </li>
+          <li class="item-list-app-description">Request payload.</li>
+          <li class="item-list-app-description">
+<pre>
+<code>
+  <span class="hlht punctuation">[</span>
+    <span class="hlht punctuation">{</span>
+      <span class="hlht literal-property property">productName</span> :<span class="hlht constant">string</span>,
+      <span class="hlht literal-property property">category</span> :<span class="hlht constant">string</span>,
+      <span class="hlht literal-property property">created</span> :<span class="hlht constant">number</span>,
+      <span class="hlht literal-property property">cost</span> :<span class="hlht punctuation">{</span>
+        <span class="hlht literal-property property">currency</span> :<span class="hlht constant">string</span>,
+        <span class="hlht literal-property property">value</span> :<span class="hlht constant">number</span>,
+      <span class="hlht punctuation">}</span>,
+      <span class="hlht literal-property property">id</span> :<span class="hlht constant">number</span>,
+      <span class="hlht literal-property property">quantity</span> :<span class="hlht constant">number</span>,
+    <span class="hlht punctuation">}</span>,
+    <span class="hlht comment">// ...</span>
+  <span class="hlht punctuation">]</span>;
+</code>
+</pre>
+        </ul>
+        <h4 class="short-description" style="opacity: .4;">Import purchases to app (must be later).</h4>
+      </main>
+    </div>
+    <script src="dist/js/bundle.js"></script>
+  </body>
+</html>

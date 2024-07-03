@@ -1,0 +1,35 @@
+.hlht{
+
+  &.keyword{
+    color :#0069c2;
+  }
+
+  &.punctuation{
+   color: #858585;
+  }
+
+  &.class-name{
+    color: #d30038;
+  }
+
+  &.string{
+    color: #007936;
+  }
+
+  &.literal-property,
+  &.property{
+    color: #d30038
+  }
+
+  &.constant{
+    color: #007936
+  }
+
+  &.function{
+    color: #d30038
+  }
+
+  &.comment{
+    color: #858585
+  }
+}
