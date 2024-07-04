@@ -1,4 +1,4 @@
-## where's my money import/export
+## where's my money import/export purchases
 
 Import/Export purchases from/to the where's my money application
 
