@@ -34,6 +34,13 @@
             The application send POST request to server. The request will have one field "payload" wich contain list purchases.
           </li>
           <li class="item-list-app-description" style="margin-top:7px"></li>
+          <li class="item-list-app-description">
+            <small>Warning:</small>
+            <ul class="nested-list-app-description">
+              <li>If for save you use localhost, browser can reject request. Change "localhost" for IP.</li>
+              <li>Also, server can reject request ( status code 413 "Payload Too Large" ). Change limit size for this.</li>
+            </ul>
+          </li>
           <li class="item-list-app-description">URL validation.</li>
           <li class="item-list-app-description">
 <pre>
@@ -55,6 +62,7 @@
 <code>
   <span class="hlht class-name">fetch</span><span class="hlht punctuation">(</span><span class="hlht punctuation"> YOUR_URL</span><span class="hlht punctuation">,</span> <span class="hlht punctuation">{</span>
     <span class="hlht literal-property property">method</span><span class="hlht operator">:</span> <span class="hlht string">"POST"</span><span class="hlht punctuation">,</span>
+    <span class="hlht literal-property property">mode</span><span class="hlht operator">:</span> <span class="hlht string">"cors"</span><span class="hlht punctuation">,</span>
     <span class="hlht literal-property property">headers</span><span class="hlht operator">:</span> <span class="hlht punctuation">{</span><span class="hlht string-property property">"Content-Type"</span><span class="hlht operator">:</span> <span class="hlht string">"application/json"</span><span class="hlht punctuation"></span><span class="hlht punctuation">}</span><span class="hlht punctuation">,</span>
     <span class="hlht literal-property property">body</span><span class="hlht operator">:</span> <span class="hlht constant">JSON</span><span class="hlht punctuation">.</span><span class="hlht function">stringify</span><span class="hlht punctuation">(</span><span class="hlht punctuation">{</span><span class="hlht literal-property property">payload</span><span class="hlht operator">:</span> <span class="hlht constant">Array</span><span class="hlht punctuation">&lt;</span><span class="hlht constant">Purchase</span><span class="hlht punctuation">&gt;</span><span class="hlht punctuation">}</span><span class="hlht punctuation">)</span>
   <span class="hlht punctuation">}</span><span class="hlht punctuation">)</span><span class="hlht punctuation">;</span>
@@ -65,10 +73,8 @@
           <li class="item-list-app-description">
 <pre>
 <code>
-  <span class="hlht keyword">type</span> Respons = <span class="hlht punctuation">{</span>
-    <span class="hlht literal-property property">status</span> :<span class="hlht constant">boolean</span>,
-    <span class="hlht literal-property property">message</span> :<span class="hlht constant">string</span>,
-    <span class="hlht literal-property property">error</span> :<span class="hlht constant">Error</span>,
+  <span class="hlht keyword">type</span> Response = <span class="hlht punctuation">{</span>
+    <span class="hlht literal-property property">message</span> :<span class="hlht constant">string</span>
   <span class="hlht punctuation">}</span>;
 </code>
 </pre>
@@ -79,15 +85,15 @@
 <code>
   <span class="hlht punctuation">[</span>
     <span class="hlht punctuation">{</span>
-      <span class="hlht literal-property property">productName</span> :<span class="hlht constant">string</span>,
+      <span class="hlht literal-property property">productName</span> :<span class="hlht constant">string</span>, <span class="hlht comment">// minimum 3 symbols</span>
       <span class="hlht literal-property property">category</span> :<span class="hlht constant">string</span>,
-      <span class="hlht literal-property property">created</span> :<span class="hlht constant">number</span>,
+      <span class="hlht literal-property property">created</span> :<span class="hlht constant">number</span>,     <span class="hlht comment">// date in milliseconds</span>
       <span class="hlht literal-property property">cost</span> :<span class="hlht punctuation">{</span>
-        <span class="hlht literal-property property">currency</span> :<span class="hlht constant">string</span>,
-        <span class="hlht literal-property property">value</span> :<span class="hlht constant">number</span>,
+        <span class="hlht literal-property property">currency</span> :<span class="hlht constant">string</span>,  <span class="hlht comment">// one of available in the application</span>
+        <span class="hlht literal-property property">value</span> :<span class="hlht constant">number</span>,     <span class="hlht comment">// any positive number</span>
       <span class="hlht punctuation">}</span>,
       <span class="hlht literal-property property">id</span> :<span class="hlht constant">number</span>,
-      <span class="hlht literal-property property">quantity</span> :<span class="hlht constant">number</span>,
+      <span class="hlht literal-property property">quantity</span> :<span class="hlht constant">number</span>,    <span class="hlht comment">// any positive number</span>
     <span class="hlht punctuation">}</span>,
     <span class="hlht comment">// ...</span>
   <span class="hlht punctuation">]</span>;
