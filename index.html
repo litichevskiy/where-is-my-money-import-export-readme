@@ -37,7 +37,19 @@
           <li class="item-list-app-description">
             <small>Warning:</small>
             <ul class="nested-list-app-description">
-              <li>If for save you use localhost, browser can reject request. Change "localhost" for IP.</li>
+              <li>
+                If for save you use localhost, browser can reject request. Change "localhost" for IP.</li>
+              <li>
+
+<pre>
+<code>
+  <span class="hlht comment">/*</span>
+    <span class="hlht comment">before: http://path/to/endpoint</span>
+    <span class="hlht comment">after:  http://YOUR_IP:PORT</span>
+  <span class="hlht comment">*/</span>
+</code>
+</pre>
+              </li>
               <li>Also, server can reject request ( status code 413 "Payload Too Large" ). Change limit size for this.</li>
             </ul>
           </li>
@@ -45,7 +57,7 @@
           <li class="item-list-app-description">
 <pre>
 <code>
-  <span class="hlht keyword">const</span> YOUR_URL = urlInput.value;
+  <span class="hlht keyword">const</span> YOUR_URL = urlInput.value; <span class="hlht comment">/* http://pathTo/endpoint */</span>
   <span class="hlht keyword">try</span><span class="hlht punctuation">{</span>
     <span class="hlht keyword">new</span> <span class="hlht class-name">URL</span><span class="hlht punctuation">(</span>YOUR_URL<span class="hlht punctuation">)</span>;
   <span class="hlht punctuation">}</span><span class="hlht keyword"> catch </span><span class="hlht punctuation">(</span>error<span class="hlht punctuation">)</span><span class="hlht punctuation">{}</span>;
