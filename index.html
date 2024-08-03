@@ -3,9 +3,11 @@
   <head>
     <title>Import/export purchases from/to Where's my money application</title>
     <meta charset="utf-8">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100..700&display=swap" rel="stylesheet">
+
     <meta name="theme-color" content="#00784D">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="dist/styles/style.css">
@@ -37,7 +39,7 @@
           <li class="item-list-app-description">
             <small class="short-description">Warning:</small>
             <ul class="nested-list-app-description">
-              <li>For import, server must be run as HTTPS protocol.</li>
+              <li>For import and export, server must be run as HTTPS protocol.</li>
               <li>
                 Otherwise the browser reject request because of <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content" class="external-link" target="_blank">Mixed content</a> the application use HTTPS
               </li>
@@ -46,7 +48,7 @@
               </li>
             </ul>
           </li>
-          <li class="item-list-app-description">URL validation.</li>
+          <li id="url-validation" class="item-list-app-description subhead">URL validation.</li>
           <li class="item-list-app-description">
 <pre>
 <code>
@@ -57,7 +59,7 @@
 </code>
 </pre>
           </li>
-          <li class="item-list-app-description">
+          <li id="CORS-link" class="item-list-app-description subhead">
             Server endpoint must allow
             <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" class="external-link" target="_blank">CORS</a> request.
           </li>
@@ -74,7 +76,7 @@
 </code>
 </pre>
           </li>
-          <li class="item-list-app-description">Expected response: (optional).</li>
+          <li class="item-list-app-description subhead">Expected response: (optional).</li>
           <li class="item-list-app-description">
 <pre>
 <code>
@@ -84,7 +86,7 @@
 </code>
 </pre>
           </li>
-          <li class="item-list-app-description">Request payload.</li>
+          <li class="item-list-app-description subhead">Request payload.</li>
           <li class="item-list-app-description">
 <pre>
 <code>
@@ -105,7 +107,53 @@
 </code>
 </pre>
         </ul>
-        <h4 class="short-description" style="opacity: .4;">Import purchases to app (must be later).</h4>
+        <h4 class="short-description">Import purchases to app.</h4>
+        <ul class="list-app-description">
+          <li class="item-list-app-description">
+            For import we use at same <a href="#url-validation" class="internal-link">
+            url validation</a> and server must support <a href="#CORS-link" class="internal-link">CORS</a> requests.
+          </li>
+          <li class="item-list-app-description">You can merge existing purchases with new or delete existing and add new, if select delete existing, you can't restore this action.</li>
+          <li class="item-list-app-description"></li>
+          <li class="item-list-app-description subhead">Expected response.</li>
+          <li class="item-list-app-description">
+<pre>
+<code>
+  <span class="hlht keyword">type</span> Response = <span class="hlht punctuation">{</span>
+    <span class="hlht literal-property property">payload</span> : <span class="hlht constant">Array</span><span class="hlht punctuation">&lt;</span><span class="hlht constant">Purchase</span><span class="hlht punctuation">&gt;</span>
+  <span class="hlht punctuation">}</span>;
+</code>
+</pre>
+          </li>
+          <li class="item-list-app-description subhead">Each purchase must contain.</li>
+          <li class="item-list-app-description">
+<pre>
+<code>
+  <span class="hlht punctuation">[</span>
+    <span class="hlht punctuation">{</span>
+      <span class="hlht literal-property property">productName</span> :<span class="hlht constant">string</span>, <span class="hlht comment">// required, minimum 3 symbols</span>
+      <span class="hlht literal-property property">created</span> :<span class="hlht constant">number</span>,     <span class="hlht comment">// required, valid date in milliseconds</span>
+      <span class="hlht literal-property property">cost</span> :<span class="hlht punctuation">{</span>              <span class="hlht comment">// required</span>
+        <span class="hlht literal-property property">currency</span> :<span class="hlht constant">string</span>,  <span class="hlht comment">// required, one of available in the application</span>
+        <span class="hlht literal-property property">value</span> :<span class="hlht constant">number</span>,     <span class="hlht comment">// required, any positive number</span>
+      <span class="hlht punctuation">}</span>,
+      <span class="hlht literal-property property">quantity</span> :<span class="hlht constant">number</span>,    <span class="hlht comment">// required, any positive number</span>
+      <span class="hlht literal-property property">category</span> :<span class="hlht constant">string</span>,    <span class="hlht comment">// optional, minimum 1 symbol (default "other")</span>
+    <span class="hlht punctuation">}</span>,
+    <span class="hlht comment">// ...</span>
+  <span class="hlht punctuation">]</span>;
+</code>
+</pre>
+          <li class="item-list-app-description subhead">Available currency.</li>
+          <li class="item-list-app-description">
+<pre>
+<code>
+  <span class="hlht keyword">type </span> Currencies = <span class="hlht constant">"EUR"<span class="hlht literal-property property"> | </span>"PLN"<span class="hlht literal-property property"> | </span>"UAH"<span class="hlht literal-property property"> | </span>"USD"</span>;
+</code>
+</pre>
+          </li>
+          <li class="item-list-app-description">If purchase/s contain wrong values, you will see "index". In this case you can check that purchase on server: yourPurchases[index]. </li>
+        </ul>
       </main>
     </div>
     <script src="dist/js/bundle.js"></script>
