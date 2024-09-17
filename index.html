@@ -139,11 +139,24 @@
       <span class="hlht punctuation">}</span>,
       <span class="hlht literal-property property">quantity</span> :<span class="hlht constant">number</span>,    <span class="hlht comment">// required, any positive number</span>
       <span class="hlht literal-property property">category</span> :<span class="hlht constant">string</span>,    <span class="hlht comment">// optional, minimum 1 symbol (default "other")</span>
+      <span class="hlht literal-property property">id</span> :<span class="hlht constant">number</span>,          <span class="hlht comment">// optional, more info below </span>
     <span class="hlht punctuation">}</span>,
     <span class="hlht comment">// ...</span>
   <span class="hlht punctuation">]</span>;
 </code>
 </pre>
+          <li class="item-list-app-description subhead">Purchase id (optional).</li>
+          <li class="item-list-app-description"></li>
+          <li class="item-list-app-description">
+            The "id" is optional field, if you use it's must be number, valid date in milliseconds <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now" class="external-link" target="_blank">Date.now()</a>, value can't be larger than current time at import moment and every value must be unique.
+          </li>
+          <li class="item-list-app-description">
+            Each purchase with existing or invalid "id" value will rejected, you will see "index" the failed data: yourPurchases[index].
+          </li>
+          <li class="item-list-app-description">
+            If you export purchases to server, than later import again at same data, without "id", you will have duplicate data, if with same "id", it will rejected.
+          </li>
+          <li class="item-list-app-description"></li>
           <li class="item-list-app-description subhead">Available currency.</li>
           <li class="item-list-app-description">
 <pre>
